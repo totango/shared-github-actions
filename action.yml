@@ -1,0 +1,37 @@
+name: 'Build Image'
+description: 'Build tag and push images to AWS ECR'
+
+outputs:
+  version:
+    description: "Image version"
+    value: ${{ steps.vars.outputs.sha_short }}
+runs:
+  using: "composite"
+  steps:
+    - name: compute short sha and current time
+      id: vars
+      shell: bash
+      run: |
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        echo "::set-output name=current_time::$(date +%s%N)"
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_USER_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_USER_ACCESS_KEY_SECRET }}
+        aws-region: us-east-1
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      shell: bash
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: socket-service
+        IMAGE_TAG: ${{ steps.vars.outputs.sha_short }}
+      run: |
+        docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
+        docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        aws dynamodb put-item --table-name versions-mgmt --item "{\"service\": {\"S\": \"socket-service\"}, \"version\": {\"S\": \"${{ steps.vars.outputs.sha_short }}\"}, \"timestamp\": {\"N\": \"${{ steps.vars.outputs.current_time }}\"}}" --region us-east-1
