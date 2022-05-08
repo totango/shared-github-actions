@@ -50,7 +50,6 @@ jobs:
         run: |
           npm install
       - name: Run tests
-        if: ${{inputs.with_test}} == 'true'
         env:
           REDIS_URL: 'redis'
         run: |
