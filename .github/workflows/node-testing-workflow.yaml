@@ -13,18 +13,18 @@ env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NODE_OPTIONS: "--max-old-space-size=4096"
 
+# This workflow contains multiple jobs
 jobs:
-  # This workflow contains multiple jobs
+  # The type of runner that the job will run on
+  # Containers must run in Linux based operating systems
+  runs-on: ubuntu-latest
+
+  container: node:12.14.1
+  strategy:
+    matrix:
+      node-version: [ 12.14.1 ]
   linting:
     if: ${{inputs.with_test != true }}
-    # The type of runner that the job will run on
-    # Containers must run in Linux based operating systems
-    runs-on: ubuntu-latest
-
-    container: node:12.14.1
-    strategy:
-      matrix:
-        node-version: [ 12.14.1 ]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -46,15 +46,7 @@ jobs:
           npx eslint .
   testing:
     if: ${{inputs.with_test == true }}
-    # The type of runner that the job will run on
-    # Containers must run in Linux based operating systems
-    runs-on: ubuntu-latest
-
-    container: node:12.14.1
-    strategy:
-      matrix:
-        node-version: [12.14.1]
-    # Service containers to add`
+    # Services to add to the container
     services:
       # Label used to access the service container
       redis:
