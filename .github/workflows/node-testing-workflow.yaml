@@ -5,6 +5,9 @@ on:
     secrets:
       NPM_TOKEN:
         required: true
+    inputs:
+      with_test:
+        type: boolean
 env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -22,6 +25,17 @@ jobs:
     strategy:
       matrix:
         node-version: [12.14.1]
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -41,3 +55,9 @@ jobs:
       - name: eslint check
         run: |
           npx eslint .
+      - name: Run tests
+        if: ${{inputs.with_test == 'true' }}
+        env:
+          REDIS_URL: 'redis'
+        run: |
+          npm run test
