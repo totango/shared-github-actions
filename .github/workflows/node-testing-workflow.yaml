@@ -49,9 +49,6 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-      - name: eslint check
-        run: |
-          npx eslint .
       - name: Run tests
         if: ${{inputs.with_test}} == 'true'
         env:
