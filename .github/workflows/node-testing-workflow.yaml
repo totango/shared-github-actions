@@ -19,13 +19,12 @@ jobs:
     # The type of runner that the job will run on
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
-    # Docker Hub image that `container-job` executes in
 
     container: node:12.14.1
     strategy:
       matrix:
         node-version: [12.14.1]
-    # Service containers to run with `container-job`
+    # Service containers to add`
     services:
       # Label used to access the service container
       redis:
