@@ -17,8 +17,13 @@ env:
 
 jobs:
   linting:
+    # The type of runner that the job will run on
+    # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
 
+    container: node:${{ inputs.node_v }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
