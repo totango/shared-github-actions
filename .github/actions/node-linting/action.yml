@@ -1,8 +1,10 @@
 name: Node linting workflow
+description: Run linting for node builds
 
 inputs:
   node_v:
-    type: string
+    description: node version for run
+    required: false
     default: "12.14.1"
 
 runs:
@@ -21,8 +23,10 @@ runs:
     # install application dependencies
     - uses: c-hive/gha-npm-cache@v1
     - name: Install dependencies
+      shell: bash
       run: |
         npm install
     - name: eslint check
+      shell: bash
       run: |
         npx eslint .
