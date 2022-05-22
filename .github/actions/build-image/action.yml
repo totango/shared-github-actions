@@ -11,6 +11,9 @@ inputs:
   service_name:
     description: 'Service name'
     required: true
+  npm_token:
+    description: 'npm_token'
+    required: true
 
 outputs:
   version:
