@@ -42,7 +42,7 @@ runs:
         ECR_REPOSITORY: ${{ inputs.service_name }}
         IMAGE_TAG: ${{ steps.vars.outputs.sha_short }}
       run: |
-        docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -t $ECR_REPOSITORY:$IMAGE_TAG . --build-arg NPM_TOKEN=${{ inputs.npm_token }}
         docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         aws dynamodb put-item --table-name versions-mgmt --item "{\"service\": {\"S\": \"${{inputs.service_name}}\"}, \"version\": {\"S\": \"${{ steps.vars.outputs.sha_short }}\"}, \"timestamp\": {\"N\": \"${{ steps.vars.outputs.current_time }}\"}}" --region us-east-1
