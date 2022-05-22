@@ -45,7 +45,7 @@ runs:
         ECR_REPOSITORY: ${{ inputs.service_name }}
         IMAGE_TAG: ${{ steps.vars.outputs.sha_short }}
       run: |
-        docker build -t $ECR_REPOSITORY:$IMAGE_TAG . --build-arg NPM_TOKEN=${{ inputs.npm_token }}
+        docker images -q 671587110562.dkr.ecr.us-east-1.amazonaws.com/utils && docker rmi $(docker images -q 671587110562.dkr.ecr.us-east-1.amazonaws.com/utils) || true docker build -t $ECR_REPOSITORY:$IMAGE_TAG --no-cache --build-arg NPM_TOKEN=${{ inputs.npm_token }} --build-arg BRANCH_NAME=develop . 
         docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         aws dynamodb put-item --table-name versions-mgmt --item "{\"service\": {\"S\": \"${{inputs.service_name}}\"}, \"version\": {\"S\": \"${{ steps.vars.outputs.sha_short }}\"}, \"timestamp\": {\"N\": \"${{ steps.vars.outputs.current_time }}\"}}" --region us-east-1
