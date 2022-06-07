@@ -47,7 +47,7 @@ jobs:
         run: |
           echo ${{ steps.extract_branch.outputs.branch }}
       - name: Build and push image
-        uses: totango/shared-github-actions/.github/actions/build-image@main
+        uses: ../actions/build-image/action.yml
         id: image
         with:
           aws_user_id: ${{secrets.AWS_USER_ACCESS_KEY_ID}}
