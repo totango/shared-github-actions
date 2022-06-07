@@ -1,0 +1,68 @@
+name: Image Build
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+      AWS_USER_ACCESS_KEY_ID:
+        required: true
+      AWS_USER_ACCESS_KEY_SECRET:
+        required: true
+      JENKINS_USER:
+        required: true
+      JENKINS_TOKEN:
+        required: true
+    inputs:
+      node_v:
+        type: string
+        required: false
+        default: "12.14.1"
+      service_name:
+        type: string
+        required: true
+env:
+  ## Sets environment variable
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
+jobs:
+  build_image:
+    # Containers must run in Linux based operating systems
+    runs-on: app_backend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: setup node
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ inputs.node_v }}
+      - name: Extract branch name
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: echo branch
+        run: |
+          echo ${{ steps.extract_branch.outputs.branch }}
+      - name: Build and push image
+        uses: totango/shared-github-actions/.github/actions/build-image@main
+        id: image
+        with:
+          aws_user_id: ${{secrets.AWS_USER_ACCESS_KEY_ID}}
+          aws_user_secret: ${{secrets.AWS_USER_ACCESS_KEY_SECRET}}
+          service_name: ${{ inputs.service_name }}
+      - name: Deploy new version
+        if: steps.extract_branch.outputs.branch == 'develop'
+        uses: leanix/jenkins-action@master
+        env:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        with:
+          jobBuildUrl: https://jenkins.totango.com/job/kube_deploy_tool/buildWithParameters
+          parameters: |
+            Action=deploy
+            Components=${{ inputs.service_name }}
+            Environment=test
+            Custom_Version=${{steps.image.outputs.version}}
