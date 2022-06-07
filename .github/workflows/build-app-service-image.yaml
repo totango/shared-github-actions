@@ -53,6 +53,7 @@ jobs:
           aws_user_id: ${{secrets.AWS_USER_ACCESS_KEY_ID}}
           aws_user_secret: ${{secrets.AWS_USER_ACCESS_KEY_SECRET}}
           service_name: ${{ inputs.service_name }}
+          npm_token: ${{secrets.NPM_TOKEN}}
       - name: Deploy new version
         if: steps.extract_branch.outputs.branch == 'develop'
         uses: leanix/jenkins-action@master
