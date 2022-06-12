@@ -46,6 +46,7 @@ jobs:
           node-version: ${{ inputs.node_v }}
 
       # install application dependencies
+      - uses: c-hive/gha-npm-cache@v1
       - name: Install Dependencies
         run: npm install
       - name: Run tests
