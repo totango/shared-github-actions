@@ -40,12 +40,6 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ inputs.node_v }}
-      - name: Extract branch name
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-      - name: echo branch
-        run: |
-          echo ${{ steps.extract_branch.outputs.branch }}
       - name: Build and push image
         uses: totango/shared-github-actions/.github/actions/build-image@main
         id: image
@@ -55,7 +49,7 @@ jobs:
           service_name: ${{ inputs.service_name }}
           npm_token: ${{secrets.NPM_TOKEN}}
       - name: Deploy new version
-        if: steps.extract_branch.outputs.branch == 'develop'
+        if: steps.image.outputs.branch == 'develop'
         uses: leanix/jenkins-action@master
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
