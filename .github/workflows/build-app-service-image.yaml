@@ -45,6 +45,10 @@ jobs:
         shell: bash
         run: |
           echo "::set-output name=service_jenkins_name::$(if [ ${{ inputs.jenkins_name }} = '' ]; then echo ${{ inputs.service_name }}; else echo ${{ inputs.jenkins_name }}; fi)"
+      - name: echo jenkins name
+        shell: bash
+        run: |
+          echo ${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
       - name: setup node
         uses: actions/setup-node@master
         with:
@@ -67,6 +71,6 @@ jobs:
           jobBuildUrl: https://jenkins.totango.com/job/kube_deploy_tool/buildWithParameters
           parameters: |
             Action=deploy
-            Components=${{ steps.get_jenkins_name.service_jenkins_name }}
+            Components=${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
             Environment=test
             Custom_Version=${{steps.image.outputs.version}}
