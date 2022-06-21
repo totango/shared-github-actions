@@ -58,7 +58,7 @@ jobs:
           service_name: ${{ inputs.service_name }}
           npm_token: ${{secrets.NPM_TOKEN}}
       - name: Deploy new version
-        if: steps.image.outputs.branch !== 'develop'
+        if: steps.image.outputs.branch == 'develop'
         uses: leanix/jenkins-action@master
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
