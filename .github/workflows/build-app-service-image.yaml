@@ -21,6 +21,11 @@ on:
       service_name:
         type: string
         required: true
+      jenkins_name:
+        type: string
+        required: false
+        default: ""
+
 env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -36,6 +41,15 @@ jobs:
         uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: get jenkins_name
+        id: get_jenkins_name
+        shell: bash
+        run: |
+          echo "::set-output name=service_jenkins_name::$(if [ ${{ inputs.jenkins_name }} != '' ]; then echo "${{ inputs.jenkins_name }}"; else echo "${{ inputs.service_name }}"; fi)"
+      - name: echo jenkins name
+        shell: bash
+        run: |
+          echo ${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
       - name: setup node
         uses: actions/setup-node@master
         with:
@@ -58,6 +72,6 @@ jobs:
           jobBuildUrl: https://jenkins.totango.com/job/kube_deploy_tool/buildWithParameters
           parameters: |
             Action=deploy
-            Components=${{ inputs.service_name }}
+            Components=${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
             Environment=test
             Custom_Version=${{steps.image.outputs.version}}
