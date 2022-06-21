@@ -45,7 +45,7 @@ jobs:
         id: get_jenkins_name
         shell: bash
         run: |
-          echo "::set-output name=service_jenkins_name::$(if [ ${{ inputs.jenkins_name }} = '' ]; then echo "no jenkins name"; else echo "i have a jenkins name"; fi)"
+          echo "::set-output name=service_jenkins_name::$(if [ ${{ inputs.jenkins_name }} != '' ]; then echo "i have jenkins name"; else echo "no jenkins name"; fi)"
       - name: echo jenkins name
         shell: bash
         run: |
