@@ -53,4 +53,4 @@ jobs:
         env:
           REDIS_URL: 'redis'
         run: |
-          npm run test
+          env IS_LOCAL_LOG=true npm run test
