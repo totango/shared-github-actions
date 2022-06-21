@@ -24,6 +24,7 @@ on:
       jenkins_name:
         type: string
         required: false
+        default: ""
 
 env:
   ## Sets environment variable
