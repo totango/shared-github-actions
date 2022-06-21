@@ -21,6 +21,10 @@ on:
       service_name:
         type: string
         required: true
+      jenkins_name:
+        type: string
+        required: false
+        default: ${{inputs.service_name}}
 env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -58,6 +62,6 @@ jobs:
           jobBuildUrl: https://jenkins.totango.com/job/kube_deploy_tool/buildWithParameters
           parameters: |
             Action=deploy
-            Components=${{ inputs.service_name }}
+            Components=${{ inputs.jenkins_name }}
             Environment=test
             Custom_Version=${{steps.image.outputs.version}}
