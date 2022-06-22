@@ -50,10 +50,6 @@ jobs:
         shell: bash
         run: |
           echo ${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
-      - name: setup node
-        uses: actions/setup-node@master
-        with:
-          node-version: ${{ inputs.node_v }}
       - name: Build and push image
         uses: totango/shared-github-actions/.github/actions/build-image@main
         id: image
