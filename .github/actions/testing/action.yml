@@ -17,23 +17,23 @@ inputs:
 
 runs:
   using: "composite"
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: setup node
-        uses: actions/setup-node@master
-        with:
-          node-version: ${{ inputs.node_v }}
+  steps:
+  # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+    - name: setup node
+      uses: actions/setup-node@master
+      with:
+        node-version: ${{ inputs.node_v }}
 
-      # install application dependencies
-      - uses: c-hive/gha-npm-cache@v1
-      - name: Install Dependencies
-        run: npm install
-      - name: Run tests
-        env:
-          REDIS_URL: ${{ inputs.redis_url }}
-          DB_URL: ${{ inputs.db_url }}
-        run: |
-          env IS_LOCAL_LOG=true npm run test
+    # install application dependencies
+    - uses: c-hive/gha-npm-cache@v1
+    - name: Install Dependencies
+      run: npm install
+    - name: Run tests
+      env:
+        REDIS_URL: ${{ inputs.redis_url }}
+        DB_URL: ${{ inputs.db_url }}
+      run: |
+        env IS_LOCAL_LOG=true npm run test

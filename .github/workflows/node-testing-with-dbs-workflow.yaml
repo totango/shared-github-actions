@@ -1,4 +1,4 @@
-name: Node testing workflow
+name: Node testing with DB and Redis workflow
 
 on:
   workflow_call:
@@ -14,6 +14,7 @@ env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NODE_OPTIONS: "--max-old-space-size=4096"
+
 jobs:
   testing:
     # The type of runner that the job will run on
