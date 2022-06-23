@@ -30,8 +30,10 @@ runs:
     # install application dependencies
     - uses: c-hive/gha-npm-cache@v1
     - name: Install Dependencies
+      shell: bash
       run: npm install
     - name: Run tests
+      shell: bash
       env:
         REDIS_URL: ${{ inputs.redis_url }}
         DB_URL: ${{ inputs.db_url }}
