@@ -14,7 +14,6 @@ env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NODE_OPTIONS: "--max-old-space-size=4096"
-
 jobs:
   testing:
     # The type of runner that the job will run on
@@ -34,10 +33,16 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: '1234'
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Build and push image
-        uses: totango/shared-github-actions/.github/actions/testing@testing
+        uses: totango/shared-github-actions/.github/actions/testing@add-testing-workflow-mysql
         id: image
         with:
           node_v: ${{ inputs.node_v }}
