@@ -48,3 +48,4 @@ jobs:
         with:
           node_v: ${{ inputs.node_v }}
           npm_token: ${{ secrets.NPM_TOKEN }}
+          db_url: mysql
