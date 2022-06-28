@@ -49,3 +49,4 @@ jobs:
           node_v: ${{ inputs.node_v }}
           npm_token: ${{ secrets.NPM_TOKEN }}
           db_url: mysql
+          redis_url: redis
