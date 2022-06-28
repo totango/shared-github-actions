@@ -1,0 +1,41 @@
+name: 'Testing'
+
+inputs:
+  npm_token:
+    description: 'npm_token'
+    required: true
+  node_v:
+    type: string
+    required: false
+    default: "12.14.1"
+  redis_url:
+    type: string
+    required: false
+  db_url:
+    type: string
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+    - name: setup node
+      uses: actions/setup-node@master
+      with:
+        node-version: ${{ inputs.node_v }}
+
+    # install application dependencies
+    - uses: c-hive/gha-npm-cache@v1
+    - name: Install Dependencies
+      shell: bash
+      run: npm install
+    - name: Run tests
+      shell: bash
+      env:
+        REDIS_URL: ${{ inputs.redis_url }}
+        DB_URL: ${{ inputs.db_url }}
+      run: |
+        env IS_LOCAL_LOG=true npm run test

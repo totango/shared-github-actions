@@ -1,4 +1,4 @@
-name: Node testing workflow
+name: Node testing with DB and Redis workflow
 
 on:
   workflow_call:
@@ -23,6 +23,23 @@ jobs:
 
     container: node:${{ inputs.node_v }}
 
+    # Service containers to add`
+    services:
+      # Label used to access the service container
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: '1234'
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
@@ -31,3 +48,5 @@ jobs:
         with:
           node_v: ${{ inputs.node_v }}
           npm_token: ${{ secrets.NPM_TOKEN }}
+          db_url: mysql
+          redis_url: redis
