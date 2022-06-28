@@ -1,19 +1,22 @@
 name: 'Testing'
+description: 'Run npm run test for nodejs services'
 
 inputs:
   npm_token:
     description: 'npm_token'
     required: true
   node_v:
-    type: string
     required: false
+    description: 'node version to run'
     default: "12.14.1"
   redis_url:
-    type: string
     required: false
+    description: 'redis url to run with'
+    default: ''
   db_url:
-    type: string
+    description: 'db url to run with'
     required: false
+    default: ''
 
 runs:
   using: "composite"
