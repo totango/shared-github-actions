@@ -36,8 +36,8 @@ jobs:
           --health-retries 5
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Build and push image
-        uses: totango/shared-github-actions/.github/actions/testing@testing
+      - name: Testing
+        uses: totango/shared-github-actions/.github/actions/testing@main
         id: image
         with:
           node_v: ${{ inputs.node_v }}

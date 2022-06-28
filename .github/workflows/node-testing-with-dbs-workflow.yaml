@@ -42,8 +42,8 @@ jobs:
           MYSQL_ROOT_PASSWORD: '1234'
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Build and push image
-        uses: totango/shared-github-actions/.github/actions/testing@add-testing-workflow-mysql
+      - name: Testing
+        uses: totango/shared-github-actions/.github/actions/testing@main
         id: image
         with:
           node_v: ${{ inputs.node_v }}
