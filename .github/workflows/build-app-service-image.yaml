@@ -66,6 +66,7 @@ jobs:
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         with:
           jobBuildUrl: https://jenkins.totango.com/job/kube_deploy_tool/buildWithParameters
+          waitForCompletion: true
           parameters: |
             Action=deploy
             Components=${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
