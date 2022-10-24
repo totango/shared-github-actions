@@ -33,9 +33,8 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ inputs.node_v }}
+          cache: 'npm'
 
-      # install application dependencies
-      - uses: c-hive/gha-npm-cache@v1
       - name: Install Dependencies
         run: npm install
       - name: eslint check
