@@ -10,6 +10,11 @@ on:
         type: string
         required: false
         default: "12.14.1"
+      cache:
+        type: string
+        required: false
+        default: 'npm'
+
 env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -50,3 +55,4 @@ jobs:
           npm_token: ${{ secrets.NPM_TOKEN }}
           db_url: mysql
           redis_url: redis
+          cache: ${{ inputs.cache }}
