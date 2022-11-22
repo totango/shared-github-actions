@@ -17,6 +17,10 @@ inputs:
     description: 'db url to run with'
     required: false
     default: ''
+  cache:
+    description: 'cache to run with'
+    required: false
+    default: 'npm'
 
 runs:
   using: "composite"
@@ -28,7 +32,7 @@ runs:
       uses: actions/setup-node@master
       with:
         node-version: ${{ inputs.node_v }}
-        cache: 'npm'
+        cache: ${{ inputs.cache }}
 
     - name: Install Dependencies
       shell: bash
