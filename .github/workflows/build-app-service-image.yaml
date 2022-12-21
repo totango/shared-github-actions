@@ -72,3 +72,4 @@ jobs:
             Components=${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
             Environment=test
             Custom_Version=${{steps.image.outputs.version}}
+            user=david@totango.com
