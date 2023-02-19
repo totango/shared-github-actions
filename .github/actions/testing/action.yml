@@ -37,6 +37,7 @@ runs:
       shell: bash
       env:
         REDIS_URL: ${{ inputs.redis_url }}
+        GLOBAL_REDIS_URL: ${{ inputs.redis_url }}
         DB_URL: ${{ inputs.db_url }}
       run: |
         env IS_LOCAL_LOG=true npm run test
