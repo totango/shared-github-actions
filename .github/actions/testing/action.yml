@@ -39,5 +39,6 @@ runs:
         REDIS_URL: ${{ inputs.redis_url }}
         GLOBAL_REDIS_URL: ${{ inputs.redis_url }}
         DB_URL: ${{ inputs.db_url }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
       run: |
         env IS_LOCAL_LOG=true npm run test
