@@ -17,14 +17,22 @@ env:
   HUSKY: 0
 
 jobs:
+  configure:
+    runs-on: app_backend
+    outputs:
+      uid_gid: ${{ steps.get-user.outputs.uid_gid }}
+    steps:
+      - id: get-user
+        run: echo "::set-output name=uid_gid::$(id -u):$(id -g)"
   testing:
+    needs: configure
     # The type of runner that the job will run on
     # Containers must run in Linux based operating systems
     runs-on: app_backend
 
     container:
       image: node:${{ inputs.node_v }}
-      options: --user root
+      options: --user ${{ needs.configure.outputs.uid_gid }}
 
     # Service containers to add`
     services:

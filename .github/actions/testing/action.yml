@@ -17,6 +17,10 @@ inputs:
     description: 'db url to run with'
     required: false
     default: ''
+  github_token:
+    description: 'git api authorization token'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
