@@ -16,6 +16,9 @@ env:
   NODE_OPTIONS: "--max-old-space-size=4096"
   HUSKY: 0
 
+permissions:
+  contents: read
+
 jobs:
   configure:
     runs-on: app_backend
