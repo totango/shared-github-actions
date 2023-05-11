@@ -17,7 +17,7 @@ env:
   HUSKY: 0
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   configure:
