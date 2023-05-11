@@ -54,7 +54,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
-        uses: totango/shared-github-actions/.github/actions/testing@main
+        uses: totango/shared-github-actions/.github/actions/testing@testing-with-github-token
         id: image
         with:
           node_v: ${{ inputs.node_v }}
