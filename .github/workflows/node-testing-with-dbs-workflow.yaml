@@ -22,7 +22,9 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: app_backend
 
-    container: node:${{ inputs.node_v }}
+    container:
+      image: node:${{ inputs.node_v }}
+      options: --user root
 
     # Service containers to add`
     services:
