@@ -65,4 +65,4 @@ jobs:
           npm_token: ${{ secrets.NPM_TOKEN }}
           db_url: mysql
           redis_url: redis
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ github.token }}
