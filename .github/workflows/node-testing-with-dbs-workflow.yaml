@@ -6,7 +6,7 @@ on:
       NPM_TOKEN:
         required: true
       PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO:
-        require: false
+        required: false
     inputs:
       node_v:
         type: string
