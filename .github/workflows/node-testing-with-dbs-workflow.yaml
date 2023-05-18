@@ -5,6 +5,8 @@ on:
     secrets:
       NPM_TOKEN:
         required: true
+      PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO:
+        require: false
     inputs:
       node_v:
         type: string
@@ -17,6 +19,7 @@ on:
 env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO: ${{ secrets.PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO }}
   NODE_OPTIONS: "--max-old-space-size=4096"
   HUSKY: 0
 
@@ -66,3 +69,4 @@ jobs:
           db_url: mysql
           redis_url: redis
           SCHEMA_PATH: ${{ inputs.schema_path }}
+          github_token_schema: ${{ secrets.PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO }}

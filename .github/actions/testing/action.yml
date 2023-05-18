@@ -21,6 +21,10 @@ inputs:
     description: 'schema files path'
     required: false
     default: ''
+  github_token_schema:
+    description: 'github_token_schema'
+    required: false
+    default: ''    
 
 runs:
   using: "composite"
@@ -28,6 +32,7 @@ runs:
     - uses: actions/checkout@v3
       with:
         repository: totango/schema
+        token: ${{ inputs.github_token_schema }}
         ref: refs/heads/master
     - uses: actions/checkout@v3
       with:
