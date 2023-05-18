@@ -10,15 +10,15 @@ on:
         type: string
         required: false
         default: "12.14.1"
+      schema_path:
+        type: string
+        required: false
+        default: "tests/schema"
 env:
   ## Sets environment variable
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NODE_OPTIONS: "--max-old-space-size=4096"
   HUSKY: 0
-
-permissions:
-  contents: read
-  packages: read
 
 jobs:
   configure:
@@ -65,4 +65,4 @@ jobs:
           npm_token: ${{ secrets.NPM_TOKEN }}
           db_url: mysql
           redis_url: redis
-          github_token: ${{ github.token }}
+          SCHEMA_PATH: ${{ inputs.schema_path }}

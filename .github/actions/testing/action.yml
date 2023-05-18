@@ -17,8 +17,8 @@ inputs:
     description: 'db url to run with'
     required: false
     default: ''
-  github_token:
-    description: 'git api authorization token'
+  schema_path:
+    description: 'schema files path'
     required: false
     default: ''
 
@@ -27,7 +27,14 @@ runs:
   steps:
     - uses: actions/checkout@v3
       with:
+        repository: totango/schema
+        ref: refs/heads/master
+    - uses: actions/checkout@v3
+      with:
         persist-credentials: false
+    - name: copy-file
+      run: |
+        cp -R ./schema ./${{ inputs.schema_path }}
     - name: setup node
       uses: actions/setup-node@master
       with:
@@ -43,6 +50,6 @@ runs:
         REDIS_URL: ${{ inputs.redis_url }}
         GLOBAL_REDIS_URL: ${{ inputs.redis_url }}
         DB_URL: ${{ inputs.db_url }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
+        SCHEMA_PATH: ${{ inputs.schema_path }}
       run: |
         env IS_LOCAL_LOG=true npm run test
