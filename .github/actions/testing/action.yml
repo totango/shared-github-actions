@@ -33,6 +33,7 @@ runs:
       with:
         persist-credentials: false
     - name: copy-file
+      shell: bash
       run: |
         cp -R ./schema ./${{ inputs.schema_path }}
     - name: setup node
