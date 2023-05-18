@@ -21,8 +21,8 @@ inputs:
     description: 'schema files path'
     required: false
     default: ''
-  github_token_schema:
-    description: 'github_token_schema'
+  private_key_schema_repo:
+    description: 'private key to access schema repo'
     required: false
     default: ''    
 
@@ -32,7 +32,7 @@ runs:
     - uses: actions/checkout@v3
       with:
         repository: totango/schema
-        ssh-key: ${{ inputs.github_token_schema }}
+        ssh-key: ${{ inputs.private_key_schema_repo }}
         ref: refs/heads/master
     - uses: actions/checkout@v3
       with:

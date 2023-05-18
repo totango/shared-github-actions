@@ -61,12 +61,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
-        uses: totango/shared-github-actions/.github/actions/testing@testing-with-github-token
+        uses: totango/shared-github-actions/.github/actions/testing@testing-with-github-token # TODO: change back to testing@main branch before merging this branch
         id: image
         with:
           node_v: ${{ inputs.node_v }}
           npm_token: ${{ secrets.NPM_TOKEN }}
           db_url: mysql
           redis_url: redis
-          SCHEMA_PATH: ${{ inputs.schema_path }}
-          github_token_schema: ${{ secrets.PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO }}
+          schema_path: ${{ inputs.schema_path }}
+          private_key_schema_repo: ${{ secrets.PRIVATE_KEY_TO_ACCESS_SCHEMA_REPO }}
