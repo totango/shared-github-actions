@@ -88,6 +88,7 @@ axios.post(jobBuildUrl, qs.stringify(queryParamJson), { auth: basicAuth })
 					const internalJenkinsDomain = 'https://jenkins.mgmt.totango.com';
 					// for GitHub Actions we need to use external Jenkins Domain,
 					// but the job has inside only internal domain
+					core.info(`check if buildUrl has not needed domain ${buildUrl.startsWith(internalJenkinsDomain)}`)
 					if (buildUrl.startsWith(internalJenkinsDomain)) {
 						buildUrl = buildUrl.replace(internalJenkinsDomain, 'https://jenkins.totango.com');
 					}
