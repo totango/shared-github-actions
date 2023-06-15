@@ -61,7 +61,7 @@ jobs:
           npm_token: ${{secrets.NPM_TOKEN}}
       - name: Deploy new version
         if: steps.image.outputs.branch == 'develop'
-        uses: totango/jenkins-action@master
+        uses: totango/jenkins-actions@master
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
