@@ -33,7 +33,7 @@ runs:
         echo "::set-output name=current_time::$(date +%s%N)"
         echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ inputs.aws_user_id }}
         aws-secret-access-key: ${{ inputs.aws_user_secret }}
