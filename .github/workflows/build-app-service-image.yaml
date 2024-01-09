@@ -61,15 +61,12 @@ jobs:
           npm_token: ${{secrets.NPM_TOKEN}}
       - name: Deploy new version
         if: steps.image.outputs.branch == 'develop'
-        uses: totango/jenkins-actions@master
-        env:
-          JENKINS_USER: ${{ secrets.JENKINS_USER }}
-          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        uses: fjogeleit/http-request-action@v1
         with:
-          jobBuildUrl: https://jenkins.totango.com/job/kube_deploy_tool/buildWithParameters
-          waitForCompletion: true
-          parameters: |
-            Action=deploy
-            Components=${{ steps.get_jenkins_name.outputs.service_jenkins_name }}
-            Environment=test
-            Custom_Version=${{steps.image.outputs.version}}
+          timeout: 900000 # 15 minutes
+          username: ${{ github.actor }}
+          password: ${{ secrets.LAMBDA_JENKINS_DEPLOYMENT_TOKEN }}
+          url: 'https://rzawfao3n6m3q5j46xwwkfwp5e0mllul.lambda-url.us-east-1.on.aws/'
+          method: 'POST'
+          data: '{"components": "${{ steps.get_jenkins_name.outputs.service_jenkins_name }}", "custom_version": "${{ steps.image.outputs.version }}", "waitForCompletion":"true"}'
+
