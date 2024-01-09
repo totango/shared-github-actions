@@ -13,8 +13,6 @@ on:
         required: true
       JENKINS_TOKEN:
         required: true
-      LAMBDA_JENKINS_DEPLOYMENT_TOKEN:
-        required: true
     inputs:
       node_v:
         type: string
