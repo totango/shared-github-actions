@@ -9,6 +9,10 @@ on:
         required: true
       AWS_USER_ACCESS_KEY_SECRET:
         required: true
+      JENKINS_USER:
+        required: false
+      JENKINS_TOKEN:
+        required: false
       LAMBDA_JENKINS_DEPLOYMENT_TOKEN:
         required: false
     inputs:
