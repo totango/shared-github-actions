@@ -37,11 +37,7 @@ jobs:
           --health-retries 5
       mysql:
         image: mysql:8
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: '1234'
-          MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+        options: docker run -e MYSQL_ROOT_PASSWORD=1234 -d -p 3306:3306 --name mysql mysql:8 --default-authentication-plugin=mysql_native_password
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
