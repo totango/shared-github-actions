@@ -41,6 +41,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: '1234'
+          MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
