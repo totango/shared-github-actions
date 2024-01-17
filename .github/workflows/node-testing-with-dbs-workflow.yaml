@@ -36,11 +36,12 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       mysql:
-        image: mysql:8
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 1234
         ports:
           - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: '1234'
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
@@ -49,5 +50,5 @@ jobs:
         with:
           node_v: ${{ inputs.node_v }}
           npm_token: ${{ secrets.NPM_TOKEN }}
-          db_url: mysql
+          db_url: "127.0.0.1"
           redis_url: redis
