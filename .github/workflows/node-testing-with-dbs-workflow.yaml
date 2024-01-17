@@ -50,5 +50,5 @@ jobs:
         with:
           node_v: ${{ inputs.node_v }}
           npm_token: ${{ secrets.NPM_TOKEN }}
-          db_url: mysql
+          db_url: "127.0.0.1"
           redis_url: redis
