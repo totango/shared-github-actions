@@ -1,5 +1,4 @@
 name: Node testing with DB and Redis workflow
-
 on:
   workflow_call:
     secrets:
@@ -15,15 +14,12 @@ env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   NODE_OPTIONS: "--max-old-space-size=4096"
   HUSKY: 0
-
 jobs:
   testing:
     # The type of runner that the job will run on
     # Containers must run in Linux based operating systems
     runs-on: app_backend
-
     container: node:${{ inputs.node_v }}
-
     # Service containers to add`
     services:
       # Label used to access the service container
@@ -36,7 +32,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       mysql:
-        image: mysql:8
+        image: mysql:5.7
         ports:
           - 3306:3306
         env:
