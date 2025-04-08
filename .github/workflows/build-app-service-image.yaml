@@ -37,7 +37,7 @@ env:
 jobs:
   build_image:
     # Containers must run in Linux based operating systems
-    runs-on: app_backend
+    runs-on: app_backend_ulatest
 
     steps:
       - name: Checkout Code
@@ -68,7 +68,6 @@ jobs:
           timeout: 900000 # 15 minutes
           username: ${{ github.actor }}
           password: ${{ secrets.LAMBDA_JENKINS_DEPLOYMENT_TOKEN }}
-          url: 'https://rzawfao3n6m3q5j46xwwkfwp5e0mllul.lambda-url.us-east-1.on.aws/'
-          method: 'POST'
+          url: "https://rzawfao3n6m3q5j46xwwkfwp5e0mllul.lambda-url.us-east-1.on.aws/"
+          method: "POST"
           data: '{"components": "${{ steps.get_jenkins_name.outputs.service_jenkins_name }}", "custom_version": "${{ steps.image.outputs.version }}", "waitForCompletion":"true"}'
-
