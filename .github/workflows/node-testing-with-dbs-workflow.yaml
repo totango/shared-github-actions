@@ -18,7 +18,7 @@ jobs:
   testing:
     # The type of runner that the job will run on
     # Containers must run in Linux based operating systems
-    runs-on: app_backend
+    runs-on: app_backend_ulatest
     container: node:${{ inputs.node_v }}
     # Service containers to add`
     services:
@@ -36,7 +36,7 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: '1234'
+          MYSQL_ROOT_PASSWORD: "1234"
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Testing
