@@ -1,0 +1,8 @@
+[
+  { "title": "UNI-123 Add feature", "accepted": true },
+  { "title": "[AI-42] Fix query", "accepted": true },
+  { "title": "ABC123-9 Update connector", "accepted": true },
+  { "title": "uni-123 Add feature", "accepted": false },
+  { "title": "Add feature", "accepted": false },
+  { "title": "Release 123-456", "accepted": false }
+]
